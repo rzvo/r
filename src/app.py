@@ -119,12 +119,12 @@ class ReoApp:
         self.render_backdrop()
         self.root.after(80, self.refresh_glass_panels)
 
-    def default_ico(self) -> str:
-        p = resource_path(os.path.join("assets", "reo.ico"))
+def default_ico(self) -> str:
+        p = resource_path("reo.ico")
         return p if os.path.exists(p) else ""
 
     def default_bg(self) -> str:
-        p = resource_path(os.path.join("assets", "theme_bg.jpg"))
+        p = resource_path("theme_bg.jpg")
         return p if os.path.exists(p) else ""
 
     def default_settings(self) -> dict:
