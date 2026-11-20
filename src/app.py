@@ -119,7 +119,7 @@ class ReoApp:
         self.render_backdrop()
         self.root.after(80, self.refresh_glass_panels)
 
-def default_ico(self) -> str:
+    def default_ico(self) -> str:
         p = resource_path("reo.ico")
         return p if os.path.exists(p) else ""
 
