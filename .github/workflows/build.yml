@@ -1,0 +1,41 @@
+name: Build reo EXE
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows-exe:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pillow pyinstaller
+
+      - name: Prepare icon
+        shell: pwsh
+        run: |
+          python -c "from PIL import Image; p='theme_bg.jpg'; ico='reo.ico'; im=Image.open(p).convert('RGB').resize((256,256), Image.Resampling.LANCZOS); im.save(ico, format='ICO')"
+
+      - name: Build GUI EXE with Icon
+        run: |
+          pyinstaller --noconfirm --onefile --windowed --icon "reo.ico" --add-data "theme_bg.jpg;." --add-data "reo.ico;." --name "reo" src/app.py
+
+      - name: Upload EXE artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: reo-windows-exe
+          path: dist/reo.exe
