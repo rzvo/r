@@ -26,7 +26,6 @@ jobs:
           pip install pillow pyinstaller
 
       - name: Prepare icon
-        shell: pwsh
         run: |
           python -c "from PIL import Image; p='theme_bg.jpg'; ico='reo.ico'; im=Image.open(p).convert('RGB').resize((256,256), Image.Resampling.LANCZOS); im.save(ico, format='ICO')"
 
